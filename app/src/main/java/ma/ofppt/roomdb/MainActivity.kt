@@ -12,7 +12,7 @@ import ma.ofppt.roomdb.model.User
 
 class MainActivity : AppCompatActivity() {
     lateinit var adapter: UserAdapter
-    var userList: List<User> = ArrayList()
+    var userList= ArrayList<User>()
     lateinit var binding: ActivityMainBinding
     lateinit var userViewModel: UserViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,12 +20,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
-
-
+        adapter = UserAdapter(userList)
+        binding.recycler.adapter = adapter
         userViewModel.userList.observe(this) {
-            userList = it
-            adapter = UserAdapter(userList)
-            binding.recycler.adapter = adapter
+            userList.clear()
+            userList.addAll(it)
             adapter.notifyDataSetChanged()
         }
 
