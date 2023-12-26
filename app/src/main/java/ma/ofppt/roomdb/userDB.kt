@@ -8,7 +8,7 @@ import ma.ofppt.roomdb.dao.UserDAO
 import ma.ofppt.roomdb.model.User
 import kotlin.concurrent.Volatile
 
-@Database(entities = [User::class], version = 1)
+@Database(entities = [User::class], version = 1, exportSchema = false)
 abstract class UserDB : RoomDatabase() {
     abstract  fun userDao(): UserDAO
      companion object{
