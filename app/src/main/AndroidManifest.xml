@@ -12,6 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.M206TP"
         tools:targetApi="31">
+        <provider
+            android:authorities="ma.ofppt.m206tp.provider"
+            android:name=".conteprovider.UserContentProvider"
+            android:exported="true"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">
