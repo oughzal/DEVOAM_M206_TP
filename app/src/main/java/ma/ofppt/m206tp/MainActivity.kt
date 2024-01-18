@@ -2,17 +2,14 @@ package ma.ofppt.m206tp
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import androidx.activity.result.ActivityResultCallback
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.tasks.Task
 import ma.ofppt.m206tp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -28,29 +25,23 @@ class MainActivity : AppCompatActivity() {
 
         //TODO : initialiser les variables
         val gso: GoogleSignInOptions =
-            GoogleSignInOptions.Builder(
-                GoogleSignInOptions.DEFAULT_SIGN_IN
-            )
+            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build()
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
-
-        googleSignIn =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-                run {
-                    if (result.resultCode == RESULT_OK) {
-                        val data: Intent? = result.getData()
-                        val task: Task<GoogleSignInAccount> =
-                            GoogleSignIn.getSignedInAccountFromIntent(data)
-                        handleSignInResult(task)
-                    }
-                }
-
-
+        val acct = GoogleSignIn.getLastSignedInAccount(this)
+        if (acct != null) {
+            navigateToSecondActivity()
+        }
                 binding.googleBtn.setOnClickListener {
                     signIn()
                 }
             }
+
+    private fun navigateToSecondActivity() {
+        finish()
+        val intent = Intent(this@MainActivity,MainActivity2::class.java)
+        startActivity(intent)
     }
 
     override fun onStart() {
@@ -65,16 +56,20 @@ class MainActivity : AppCompatActivity() {
 
     fun signIn() {
         val signInIntent: Intent = mGoogleSignInClient.getSignInIntent()
-        googleSignIn.launch(signInIntent)
+        startActivityForResult(signInIntent,1000)
     }
 
-    private fun handleSignInResult(task: Task<GoogleSignInAccount>) {
-        try {
-            val account: GoogleSignInAccount =
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 1000) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
                 task.getResult(ApiException::class.java)
-            updateUI(account)
-        } catch (e: ApiException) {
-            Log.w("TAG", "signInResult:failed code=" + e.statusCode)
+                navigateToSecondActivity()
+            } catch (e: ApiException) {
+                Toast.makeText(applicationContext, "Something went wrong", Toast.LENGTH_SHORT)
+                    .show()
+            }
         }
     }
 
