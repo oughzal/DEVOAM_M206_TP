@@ -1,6 +1,7 @@
 package ma.ofppt.m206tp
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
@@ -12,8 +13,6 @@ import com.google.android.gms.tasks.OnCompleteListener
 import ma.ofppt.m206tp.databinding.ActivityMain2Binding
 
 class MainActivity2 : AppCompatActivity() {
-    private lateinit var googleSignIn: ActivityResultLauncher<Intent>
-    lateinit var account: GoogleSignInAccount
     lateinit var binding: ActivityMain2Binding
     lateinit var mGoogleSignInClient: GoogleSignInClient
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,15 +20,20 @@ class MainActivity2 : AppCompatActivity() {
         binding = ActivityMain2Binding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestEmail()
+            .requestProfile()
+            .build()
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
 
         val acct = GoogleSignIn.getLastSignedInAccount(this)
         if (acct != null) {
             val personName = acct.displayName
             val personEmail = acct.email
+            val photo = acct.photoUrl
             binding.name.setText(personName)
             binding.email.setText(personEmail)
+            binding.profilImage.setImageURI(Uri.parse(photo.toString()))
         }
         binding.signout.setOnClickListener {
             signOut()

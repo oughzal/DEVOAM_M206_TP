@@ -12,8 +12,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import ma.ofppt.m206tp.databinding.ActivityMainBinding
 
+
 class MainActivity : AppCompatActivity() {
-    private lateinit var googleSignIn: ActivityResultLauncher<Intent>
+
     lateinit var account: GoogleSignInAccount
     lateinit var binding: ActivityMainBinding
     lateinit var mGoogleSignInClient: GoogleSignInClient
@@ -27,20 +28,22 @@ class MainActivity : AppCompatActivity() {
         val gso: GoogleSignInOptions =
             GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
+                .requestProfile()
                 .build()
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
         val acct = GoogleSignIn.getLastSignedInAccount(this)
         if (acct != null) {
             navigateToSecondActivity()
         }
-                binding.googleBtn.setOnClickListener {
-                    signIn()
-                }
-            }
+
+        binding.googleBtn.setOnClickListener {
+            signIn()
+        }
+    }
 
     private fun navigateToSecondActivity() {
         finish()
-        val intent = Intent(this@MainActivity,MainActivity2::class.java)
+        val intent = Intent(this@MainActivity, MainActivity2::class.java)
         startActivity(intent)
     }
 
@@ -56,7 +59,7 @@ class MainActivity : AppCompatActivity() {
 
     fun signIn() {
         val signInIntent: Intent = mGoogleSignInClient.getSignInIntent()
-        startActivityForResult(signInIntent,1000)
+        startActivityForResult(signInIntent, 1000)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
