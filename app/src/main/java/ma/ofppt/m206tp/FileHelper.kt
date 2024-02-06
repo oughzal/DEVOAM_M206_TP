@@ -62,7 +62,7 @@ class FileHelper {
         }
 
         fun saveFile(app: Application, content: String) {
-            val file = File(app.filesDir, "file1.txt")
+            val file = File(app.filesDir, "ficonfig.txt")
             file.writeText(content)
         }
 
