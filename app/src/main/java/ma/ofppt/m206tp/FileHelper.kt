@@ -5,9 +5,17 @@ import android.content.Context
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
+import java.nio.charset.Charset
 
 class FileHelper {
     companion object {
+        fun getFileInternal(context: Context, fileName: String, content: String): String {
+            return context.openFileInput(fileName).bufferedReader().use {
+                it.readText()
+            }
+
+        }
+
         fun writeFileInternal(context: Context, fileName: String, content: String) {
             context.openFileOutput(fileName, Context.MODE_PRIVATE).use {
                 it.write(content.toByteArray())
@@ -20,6 +28,7 @@ class FileHelper {
 
         fun writeFileExternal(context: Context, fileName: String, content: String) {
             val file = File(context.getExternalFilesDir(null), fileName)
+            //file.writeText(content, Charsets.UTF_8)
             FileOutputStream(file).use {
                 it.write(content.toByteArray())
             }
@@ -48,6 +57,34 @@ class FileHelper {
 
         fun readFileResources(context: Context, resId: Int): String {
             context.resources.openRawResource(resId).bufferedReader().use { return it.readText() }
+        }
+
+        fun saveFile(app: Application, content: String) {
+            val file = File(app.filesDir, "file1.txt")
+            file.writeText(content)
+        }
+
+        fun readFile(app: Application): String {
+            val file = File(app.filesDir, "file1.txt")
+            return if(file.exists()) file.readText() else ""
+         }
+
+        fun saveCacheFile(app: Application, content: String) {
+            val file = File(app.cacheDir, "file1.txt")
+            file.writeText(content)
+        }
+
+        fun readCacheFile(app: Application): String {
+            val file = File(app.cacheDir, "file1.txt")
+            return if(file.exists()) file.readText() else ""
+        }
+        fun saveExternalFile(app: Application, content: String) {
+            val file = File(app.getExternalFilesDir("Dossierjui"), "file1.txt")
+            file.writeText(content)
+        }
+        fun readExternal(app: Application):String{
+            val file = File(app.getExternalFilesDir("Dossier"),"file1")
+            return if(file.exists()) file.readText() else ""
         }
 
     }
