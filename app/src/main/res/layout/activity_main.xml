@@ -7,6 +7,7 @@
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".MainActivity">
+
     <RadioGroup
         android:id="@+id/txtColor"
         android:layout_width="match_parent"
@@ -41,15 +42,16 @@
             android:text="Green" />
 
     </RadioGroup>
+
     <EditText
         android:id="@+id/txtContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_weight="1"
         android:gravity="top"
-        android:text="File Content"
         android:padding="10dp"
-        android:textSize="30sp"
-        android:layout_weight="1" />
+        android:text="File Content"
+        android:textSize="30sp" />
 
     <RadioGroup
         android:id="@+id/fileLocation"
@@ -62,6 +64,7 @@
             android:id="@+id/internal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:checked="true"
             android:text="interne" />
 
         <RadioButton
@@ -71,30 +74,29 @@
             android:text="cache" />
 
         <RadioButton
-            android:id="@+id/assets"
+            android:id="@+id/external"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="assets" />
-
-        <RadioButton
-            android:id="@+id/ressource"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ressource" />
+            android:text="External" />
 
     </RadioGroup>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center">
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Read" />
 
-    <Button
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Write" />
-</LinearLayout>
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/btnRead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:text="Read" />
+
+        <Button
+            android:id="@+id/btnWrite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Write" />
+    </LinearLayout>
 </LinearLayout>

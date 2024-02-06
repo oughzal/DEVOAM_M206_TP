@@ -1,95 +1,53 @@
 package ma.ofppt.m206tp
 
-import android.app.Application
 import android.content.Context
 import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
-import java.nio.charset.Charset
 
 class FileHelper {
-    companion object {
-        fun getFileInternal(context: Context, fileName: String): String {
-            return context.openFileInput(fileName).bufferedReader().use {
-                it.readText()
-            }
+    companion object{
 
-        }
-
-        fun writeFileInternal(context: Context, fileName: String, content: String) {
-            context.openFileOutput(fileName, Context.MODE_PRIVATE).use {
-                it.write(content.toByteArray())
+        // TODO : Read from Internal file
+        fun readIntarnalFile(context: Context):String{
+            val file = File(context.filesDir,"content.txt")
+            if(file.exists()){
+                return file.readText()
+            }else{
+                return ""
             }
         }
-
-        fun readFileInternal(context: Context, fileName: String): String {
-            return context.openFileInput(fileName).bufferedReader().use { it.readText() }
-        }
-
-        fun writeFileExternal(context: Context, fileName: String, content: String) {
-            val file = File(context.getExternalFilesDir(null), fileName)
-            //file.writeText(content, Charsets.UTF_8)
-            FileOutputStream(file).use {
-                it.write(content.toByteArray())
-            }
-        }
-
-        fun readFileExternal(context: Context, fileName: String): String {
-            val file = File(context.getExternalFilesDir(null), fileName)
-            return FileInputStream(file).bufferedReader().use { it.readText() }
-        }
-
-        fun writeFileCache(context: Context, fileName: String, content: String) {
-            val file = File(context.cacheDir, fileName)
-            FileOutputStream(file).use {
-                it.write(content.toByteArray())
-            }
-        }
-
-        fun readFileCache(context: Context, fileName: String): String {
-            val file = File(context.cacheDir, fileName)
-            return FileInputStream(file).bufferedReader().use {
-                it.readText()
-            }
-        }
-
-        fun readFileAssets(context: Context, fileName: String): String {
-            context.assets.open(fileName).bufferedReader().use { return it.readText() }
-        }
-
-        fun readFileResources(context: Context, resId: Int): String {
-            context.resources.openRawResource(resId).bufferedReader().use { return it.readText() }
-        }
-
-        fun saveFile(app: Application, content: String) {
-            val file = File(app.filesDir, "ficonfig.txt")
+        // TODO : Write to Internal file
+        fun writeInternalFile(context: Context,content : String){
+            val file = File(context.filesDir,"content.txt")
             file.writeText(content)
         }
 
-        fun readFile(app: Application): String {
-            val file = File(app.filesDir, "file1.txt")
-            return if(file.exists()) file.readText() else ""
-         }
-
-        fun saveCacheFile(app: Application, content: String) {
-            val file = File(app.cacheDir, "file1.txt")
+        // TODO : Read from cache file
+        fun readCacheFile(context: Context):String{
+            val file = File(context.cacheDir,"content.txt")
+            if(file.exists()){
+                return file.readText()
+            }else{
+                return ""
+            }
+        }
+        // TODO : Write to cache file
+        fun writeCacheFile(context: Context,content : String){
+            val file = File(context.cacheDir,"content.txt")
             file.writeText(content)
         }
-
-        fun readCacheFile(app: Application): String {
-            val file = File(app.cacheDir, "file1.txt")
-            return if(file.exists()) file.readText() else ""
+        // TODO : Read from external file
+        fun readExternalFile(context: Context):String{
+            val file = File(context.getExternalFilesDir("DEV"),"content.txt")
+            if(file.exists()){
+                return file.readText()
+            }else{
+                return ""
+            }
         }
-        fun saveExternalFile(app: Application, content: String) {
-            val file = File(app.getExternalFilesDir("Dossierjui"), "file1.txt")
+        // TODO : Write to external file
+        fun writeExternalFile(context: Context,content : String){
+            val file = File(context.getExternalFilesDir("DEV"),"content.txt")
             file.writeText(content)
         }
-        fun readExternal(app: Application):String{
-            val file = File(app.getExternalFilesDir("Dossier"),"file1")
-            return if(file.exists()) file.readText() else ""
-        }
-
     }
 }
-
-

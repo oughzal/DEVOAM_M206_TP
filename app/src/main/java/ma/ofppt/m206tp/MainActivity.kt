@@ -51,5 +51,25 @@ class MainActivity : AppCompatActivity() {
             binding.txtContent.setTextColor(color)
         }
 
+        //TODO : Write Button
+        binding.btnWrite.setOnClickListener {
+            val content = binding.txtContent.text.toString()
+            when(binding.fileLocation.checkedRadioButtonId){
+                R.id.internal -> FileHelper.writeInternalFile(applicationContext,content)
+                R.id.cache -> FileHelper.writeCacheFile(applicationContext,content)
+                R.id.external -> FileHelper.writeExternalFile(applicationContext,content)
+            }
+
+        }
+        binding.btnRead.setOnClickListener {
+            val content =   when(binding.fileLocation.checkedRadioButtonId){
+                R.id.internal -> FileHelper.readIntarnalFile(applicationContext)
+                R.id.cache -> FileHelper.readCacheFile(applicationContext)
+                R.id.external -> FileHelper.readExternalFile(applicationContext)
+                else -> ""
+            }
+            binding.txtContent.setText(content)
+        }
+
     }
 }
