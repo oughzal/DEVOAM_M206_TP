@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "531139120104",
+    "project_id": "devoam-m206",
+    "storage_bucket": "devoam-m206.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:531139120104:android:bba9bdf9afd744c5b6325d",
+        "android_client_info": {
+          "package_name": "ma.ofppt.m206tp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyn7X9KTo38a52ERI3UXxWt41W5vjtMs8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
