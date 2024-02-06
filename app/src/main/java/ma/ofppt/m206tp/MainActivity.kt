@@ -66,6 +66,8 @@ class MainActivity : AppCompatActivity() {
                 R.id.internal -> FileHelper.readIntarnalFile(applicationContext)
                 R.id.cache -> FileHelper.readCacheFile(applicationContext)
                 R.id.external -> FileHelper.readExternalFile(applicationContext)
+                R.id.assets -> FileHelper.readFileAssets(applicationContext,"content.txt")
+                R.id.ressource -> FileHelper.readFileResources(applicationContext,R.raw.content)
                 else -> ""
             }
             binding.txtContent.setText(content)

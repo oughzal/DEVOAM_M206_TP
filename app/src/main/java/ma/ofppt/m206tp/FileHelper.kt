@@ -49,5 +49,12 @@ class FileHelper {
             val file = File(context.getExternalFilesDir("DEV"),"content.txt")
             file.writeText(content)
         }
+        fun readFileAssets(context: Context, fileName: String): String {
+            context.assets.open(fileName).bufferedReader().use { return it.readText() }
+        }
+
+        fun readFileResources(context: Context, resId: Int): String {
+            context.resources.openRawResource(resId).bufferedReader().use { return it.readText() }
+        }
     }
 }
