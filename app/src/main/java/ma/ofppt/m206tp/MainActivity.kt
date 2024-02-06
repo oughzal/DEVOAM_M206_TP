@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
                 Color.RED -> binding.red.setTextColor(color)
                 Color.GREEN -> binding.green.setTextColor(color)
             }
-            //Ecrire les valeurs
+            //TODO Ecrire les valeurs
             val editor = sharedPreferences.edit()
             editor.putInt("color",color)
             editor.commit()
