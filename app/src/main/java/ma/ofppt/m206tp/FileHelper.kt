@@ -9,7 +9,7 @@ import java.nio.charset.Charset
 
 class FileHelper {
     companion object {
-        fun getFileInternal(context: Context, fileName: String, content: String): String {
+        fun getFileInternal(context: Context, fileName: String): String {
             return context.openFileInput(fileName).bufferedReader().use {
                 it.readText()
             }
@@ -48,7 +48,9 @@ class FileHelper {
 
         fun readFileCache(context: Context, fileName: String): String {
             val file = File(context.cacheDir, fileName)
-            return FileInputStream(file).bufferedReader().use { it.readText() }
+            return FileInputStream(file).bufferedReader().use {
+                it.readText()
+            }
         }
 
         fun readFileAssets(context: Context, fileName: String): String {
